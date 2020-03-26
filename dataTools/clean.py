@@ -55,11 +55,9 @@ with open(args.input) as infile:
             cnt += 1
 
             if bool(botTest.search(line)):
-                #print("bot")
                 continue
             if len(processedText.strip()) == 0:
                 continue
             kept += 1
             outfile.write(processedText)  # already has the newline from old file
-            #maybe duplicate and process
 print("Processed " + str(cnt) + " lines (" + str(cnt-kept) + " removed).")

@@ -1,5 +1,4 @@
 from simTok import getAllDists, getTokenDist, getDiff, listToIds
-#from dataRedditRepo import get
 from redditCommentdata import get
 import functools
 import matplotlib.pyplot as plt; plt.rcdefaults()
@@ -54,11 +53,7 @@ def batch(iterable, n=1):
 print(sys.version)
 
 # https://stackoverflow.com/questions/9234560/find-all-csv-files-in-a-directory-using-python/12280052
-#directory = r'C:\Users\maxim\Desktop\js\WordFlow\redditData'
-#allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.csv' in x, os.listdir(directory))))[0:5]
-#text = " ".join(list(map(get, allFiles)))
-#text = get(r"C:\Users\maxim\Desktop\js\WordFlow\redditData\learning_space.csv")
-directory = r"C:\Users\maxim\Desktop\js\nlpStat\data"
+directory = os.getcwd() + r"\data"
 allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.fin' in x, os.listdir(directory))))#[1:2]
 text = " ".join(list(map(get, allFiles)))
 
@@ -70,25 +65,8 @@ words = list(filter(lambda x: False if hasNumbers(x) or blackList(x) or "_" in x
 print("WordID")
 wordIdList, wordIds = listToIds(words)
 woidToWord = {y:x for x,y in wordIds.items()}
-#woid = worq
-# dIds[word.lower()]
 tokenCounts = Counter(wordIdList)
 print("Dists")
-"""
-RESgood = getTokenChunks(wordIds["good"], wordIdList, tokenCounts)
-displayWordChart([itm[0] for itm in RESgood.most_common(20)], [itm[1] for itm in RESgood.most_common(20)], "good")
-
-RESbad = getTokenChunks(wordIds["bad"], wordIdList, tokenCounts)
-displayWordChart([itm[0] for itm in RESbad.most_common(20)], [itm[1] for itm in RESbad.most_common(20)], "bad")
-
-RESother = getTokenChunks(wordIds["other"], wordIdList, tokenCounts)
-displayWordChart([itm[0] for itm in RESother.most_common(20)], [itm[1] for itm in RESother.most_common(20)], "other")
-
-RESwhy = getTokenChunks(wordIds["why"], wordIdList, tokenCounts)
-displayWordChart([itm[0] for itm in RESwhy.most_common(20)], [itm[1] for itm in RESwhy.most_common(20)], "why")
-
-displayWordChart([wordIds[a] for a in ["bad", "other", "why"]], [getDiff(RESgood, b) for b in [RESbad, RESother, RESwhy]], "compare good", "diff", True)
-"""
 
 tokenData = getAllDists(wordIdList, tokenCounts, 11)#25)
 
@@ -100,11 +78,9 @@ def searchWord(searchWord):
     ranked=Counter()
     print("comparing...")
     for wid, dist in tqdm(tokenCounts.items()):
-        #if wid > 1000: print(wid)
         ranked[wid] = getDiff(tokenData[searchWoid], tokenData[wid])
 
-    top20 = ranked.most_common()[:-20-1:-1]#[:-20]
-    #print(top20)
+    top20 = ranked.most_common()[:-20-1:-1]
     displayWordChart([k for k, v in top20], [v for k, v in top20], "compare " + searchWord, "diff", True)
     plt.show()
 

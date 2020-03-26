@@ -12,12 +12,6 @@ def getArgs(args=sys.argv[1:]):
     return options
 
 args = getArgs(sys.argv[1:])
-#args = SimpleNamespace(sub="nasa", count=10000, output="out.txt")
-
-#print(args)
-#print(args.count)
-#print(args.output)
-#print(args.sub)
 
 gen = DownloadIter(args.sub, args.count)
 

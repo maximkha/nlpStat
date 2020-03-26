@@ -77,7 +77,6 @@ if __name__ == '__main__':
     
     dataFragments = list(itertools.chain.from_iterable(dataFragments)) #stick the lists together
 
-    #cprint(dataFragments)
     print("DeFragmenting")
     for fragment in tqdm(dataFragments):
         allData[fragment[0]] = fragment[1]

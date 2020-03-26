@@ -1,5 +1,5 @@
 from simTok import *
-from dataRedditRepo import get
+from redditCommentdata import get
 import functools
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import matplotlib.pyplot as plt
@@ -54,10 +54,9 @@ def batch(iterable, n=1):
 print(sys.version)
 
 # https://stackoverflow.com/questions/9234560/find-all-csv-files-in-a-directory-using-python/12280052
-directory = r'C:\Users\maxim\Desktop\js\WordFlow\redditData'
-allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.csv' in x, os.listdir(directory))))[0:5]
+directory = os.getcwd() + r"\data"
+allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.fin' in x, os.listdir(directory))))#[1:2]
 text = " ".join(list(map(get, allFiles)))
-#text = get(r"C:\Users\maxim\Desktop\js\WordFlow\redditData\learning_space.csv")
 
 print("Filtering")
 words = text.lower().split(" ")  #naively assumes text is continuous
