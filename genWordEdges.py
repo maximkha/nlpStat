@@ -10,6 +10,7 @@ from p_tqdm import p_uimap
 #from tqdm.contrib.concurrent import process_map
 import itertools
 from random import shuffle
+from pathlib import Path
 
 def hasNumbers(inputString):
      return any(char.isdigit() for char in inputString)
@@ -43,8 +44,8 @@ def batch(iterable, n=1):
         yield iterable[ndx:min(ndx + n, l)]
 
 if __name__ == '__main__':
-    directory = r"C:\Users\maxim\Desktop\js\nlpStat\data"
-    allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.fin' in x, os.listdir(directory))))#[1:2]
+    directory = Path.cwd() / r"data"
+    allFiles = list([str(pathlibFile.resolve()) for pathlibFile in directory.glob('*.fin')])#[1:2]
     text = " ".join(list(map(get, allFiles)))
 
     print("Filtering")

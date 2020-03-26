@@ -9,6 +9,7 @@ import sys
 from functools import partial
 import itertools
 from tqdm import tqdm
+from pathlib import Path
 
 def displayWordChart(wordIDs, data, title="search", dataTitle="count", logScale = False):
     global woidToWord
@@ -53,8 +54,8 @@ def batch(iterable, n=1):
 print(sys.version)
 
 # https://stackoverflow.com/questions/9234560/find-all-csv-files-in-a-directory-using-python/12280052
-directory = os.getcwd() + r"\data"
-allFiles = list(map(lambda x: directory + "\\" + x, filter(lambda x: '.fin' in x, os.listdir(directory))))#[1:2]
+directory = Path.cwd() / r"data"
+allFiles = list([str(pathlibFile.resolve()) for pathlibFile in directory.glob('*.fin')])#[1:2]
 text = " ".join(list(map(get, allFiles)))
 
 print("Filtering")
