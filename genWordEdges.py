@@ -11,6 +11,7 @@ from p_tqdm import p_uimap
 import itertools
 from random import shuffle
 from pathlib import Path
+import time
 
 def hasNumbers(inputString):
      return any(char.isdigit() for char in inputString)
@@ -27,9 +28,16 @@ def Worker(allWids, tokenData, widA):
 
 def BatchWorker(allWids, tokenData, widAs):
     from simTok import getDiff
+    import time
     ret = []
     #print("P["+str(widAs[0])+"]: Start!")
-    for widA in widAs:
+    t = time.time()
+    for i in range(len(widAs)):
+        widA = widAs[i]
+        if time.time() - t > 60:
+            print("")
+            print("P["+str(widAs[0])+"]: Alive(" + str(i) + "/" + str(len(widAs)) + ")!")
+            t = time.time()
         edges = dict()
         #print("P["+str(widAs[0])+"]: " + str(widA))
         for widB in allWids:
@@ -46,7 +54,7 @@ def batch(iterable, n=1):
 if __name__ == '__main__':
     directory = Path.cwd() / r"data"
     allFiles = list([str(pathlibFile.resolve()) for pathlibFile in directory.glob('*.fin')])#[1:2]
-    text = " ".join(list(map(get, allFiles)))
+    text = " ".join(list(map(get, allFiles)))[:100000]
 
     print("Filtering")
     words = text.lower().split(" ")  #naively assumes text is continuous
@@ -87,6 +95,7 @@ if __name__ == '__main__':
     #        allData[widA][widB] = getDiff(tokenData[widA], tokenData[widB])
 
     print("SAVING EDGE")
-
+    print(len(allData.items()))
+    
     with open('WordEdges.json', 'w') as outfile:
         json.dump(allData, outfile)

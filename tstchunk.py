@@ -11,6 +11,7 @@ from deepchunk import getAllChunks, Chunkify
 from simTok import listToIds
 import json
 from markov import GenMarkovModel, GenMarkovChain
+from pathlib import Path
 
 def displayWordChart(wordIDs, data, title="search", dataTitle="count", logScale = False):
     global woidToWord
