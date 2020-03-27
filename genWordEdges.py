@@ -9,9 +9,11 @@ from multiprocessing import Pool
 from p_tqdm import p_uimap
 #from tqdm.contrib.concurrent import process_map
 import itertools
-from random import shuffle
+from random import shuffle,seed
 from pathlib import Path
 import time
+
+seed(9001)
 
 def hasNumbers(inputString):
      return any(char.isdigit() for char in inputString)
@@ -54,7 +56,7 @@ def batch(iterable, n=1):
 if __name__ == '__main__':
     directory = Path.cwd() / r"data"
     allFiles = list([str(pathlibFile.resolve()) for pathlibFile in directory.glob('*.fin')])#[1:2]
-    text = " ".join(list(map(get, allFiles)))[:100000]
+    text = " ".join(list(map(get, allFiles)))
 
     print("Filtering")
     words = text.lower().split(" ")  #naively assumes text is continuous
